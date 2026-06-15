@@ -31,7 +31,7 @@ export default function ProductCard({product, locale, categoryLabel}: ProductCar
   return (
     <Link
       href={`/catalog/${product.slug.current}`}
-      className="group block bg-cream border border-line rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300"
+      className="group block bg-cream border border-line rounded-sm overflow-hidden hover:shadow-lg hover:border-gold/40 transition-all duration-300"
     >
       {/* Обёртка изображения с соотношением сторон 4:5 */}
       <div className="relative aspect-[4/5] w-full overflow-hidden bg-champagne">
