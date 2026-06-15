@@ -6,7 +6,85 @@
 
 **Architecture:** Next.js (App Router, TypeScript) + Tailwind CSS v4 (цветовые токены бренда через `@theme`). Мультиязычность — next-intl с локализованными маршрутами `/uk` (по умолчанию) и `/en`. Анимации — Framer Motion через клиентский компонент-обёртку `<Reveal>`. Главная собрана из независимых секций-компонентов.
 
-**Tech Stack:** Next.js 15 (App Router), TypeScript, Tailwind CSS v4, next-intl, Framer Motion, next/font (EB Garamond + Montserrat).
+**Tech Stack:** Next.js 16 (App Router), TypeScript, **Tailwind CSS v3** (токены бренда в `tailwind.config.ts`), next-intl v4, Framer Motion, next/font (EB Garamond + Montserrat).
+
+> ⚠️ **Обновление среды (2026-06-15):** на машине владельца Windows **Smart App Control**
+> блокирует нативный бинарник Tailwind v4 (`@tailwindcss/oxide`) → сборка с v4 локально
+> невозможна. Решение: используем **Tailwind v3** (чистый JS). Task 1 выполняется в
+> v3-форме (см. «Task 1 (v3)» ниже), а не через `@theme`. Остальные задачи без изменений.
+
+### Task 1 (v3) — ЗАМЕНЯЕТ Task 1 (версию с `@theme`)
+
+**Переход на v3:**
+```powershell
+npm uninstall tailwindcss @tailwindcss/postcss
+npm install -D tailwindcss@^3 postcss autoprefixer
+```
+
+**Создать `tailwind.config.ts`:**
+```ts
+import type {Config} from 'tailwindcss';
+
+const config: Config = {
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+  theme: {
+    extend: {
+      colors: {
+        ivory: '#F7F4ED',
+        cream: '#FFFFFF',
+        champagne: '#EFE7D6',
+        gold: '#C4A052',
+        'gold-deep': '#A07E32',
+        charcoal: '#1F1B16',
+        muted: '#6E665A',
+        line: '#E3DAC9',
+        dark: '#15120E'
+      },
+      fontFamily: {
+        heading: ['var(--font-eb-garamond)', 'Georgia', 'serif'],
+        body: ['var(--font-montserrat)', 'system-ui', 'sans-serif']
+      }
+    }
+  },
+  plugins: []
+};
+
+export default config;
+```
+
+**Заменить `postcss.config.mjs`:**
+```js
+const config = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {}
+  }
+};
+
+export default config;
+```
+
+**Заменить `src/app/globals.css`:**
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-ivory text-charcoal font-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-heading;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+}
+```
+
+> Классы `bg-ivory`, `text-charcoal`, `font-heading`, `font-body` приходят из
+> `tailwind.config.ts`. В компонентах ниже вместо
+> `font-[family-name:var(--font-eb-garamond)]` используем `font-heading`.
 
 ---
 
