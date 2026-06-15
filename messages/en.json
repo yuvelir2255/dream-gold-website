@@ -97,7 +97,38 @@
         "classic": "Classic",
         "modern": "Modern",
         "vintage": "Vintage"
+      },
+      "stones": {
+        "natural": "Natural diamond",
+        "lab": "Lab-grown diamond"
       }
+    }
+  },
+  "product": {
+    "cta": "I want one like this",
+    "spec": {
+      "category": "Type",
+      "metal": "Metal",
+      "purity": "Purity",
+      "style": "Style",
+      "stones": "Stones"
+    },
+    "sections": {
+      "description": "Description",
+      "details": "Details",
+      "shipping": "Shipping & Returns",
+      "packaging": "Packaging",
+      "care": "Care & Safety"
+    },
+    "static": {
+      "shipping": "Delivery across Ukraine and all of Europe. Timing and cost are agreed individually after you place a request.",
+      "packaging": "Every piece arrives in branded Dream Gold gift packaging.",
+      "care": [
+        "Keep away from children — small parts and chains can be hazardous.",
+        "Handle with care — put pieces on and take them off slowly.",
+        "Do not wear during sleep, sport, or active pursuits.",
+        "Protect from impacts and chemicals; store each piece separately in a soft pouch."
+      ]
     }
   }
 }
