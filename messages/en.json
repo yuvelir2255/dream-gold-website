@@ -6,10 +6,13 @@
     "contacts": "Contacts"
   },
   "hero": {
-    "title": "Jewelry born from your desire",
-    "subtitle": "Own production in Ukraine. Bespoke pieces and work from your reference.",
-    "ctaPrimary": "Create a piece",
-    "ctaSecondary": "View works"
+    "eyebrow": "Maison de Joaillerie · Ukraine",
+    "titleLead": "Your dream,",
+    "titleRest": "cast in gold",
+    "subtitle": "Our own atelier in Ukraine. Bespoke jewellery made to order — from your idea, a photo, or pure inspiration.",
+    "ctaPrimary": "Create your piece",
+    "ctaSecondary": "View the works",
+    "scrollCue": "Scroll"
   },
   "create": {
     "title": "Create your own piece",
