@@ -4,6 +4,7 @@ import {setRequestLocale} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {EB_Garamond, Montserrat} from 'next/font/google';
 import {routing} from '@/i18n/routing';
+import SmoothScroll from '@/components/ui/SmoothScroll';
 import '../globals.css';
 
 // Заголовочный serif с кириллицей + латиницей
@@ -48,7 +49,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${ebGaramond.variable} ${montserrat.variable}`}>
       <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider><SmoothScroll>{children}</SmoothScroll></NextIntlClientProvider>
       </body>
     </html>
   );
