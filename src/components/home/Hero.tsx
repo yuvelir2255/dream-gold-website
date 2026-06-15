@@ -113,14 +113,22 @@ export default function Hero() {
   const [show3D, setShow3D] = useState(false);
   useEffect(() => {
     const wide = window.matchMedia('(min-width: 1024px)').matches;
-    const notReduced = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // WebGL: пробуем webgl2 / webgl / experimental-webgl — разные браузеры и конфиги.
     let webgl = false;
     try {
-      webgl = !!document.createElement('canvas').getContext('webgl');
+      const c = document.createElement('canvas');
+      webgl = !!(
+        c.getContext('webgl2') ||
+        c.getContext('webgl') ||
+        c.getContext('experimental-webgl')
+      );
     } catch {
       webgl = false;
     }
-    setShow3D(wide && notReduced && webgl);
+    // 3D-бриллиант — фирменная фишка: показываем на десктопе при наличии WebGL.
+    // reduced-motion НЕ блокирует сам камень (владелец хочет его видеть);
+    // параллакс и появления секций по-прежнему уважают reduced-motion.
+    setShow3D(wide && webgl);
   }, []);
 
   // Параллакс: диапазоны разные при reduced-motion, но НАЧАЛЬНОЕ значение (scroll=0)

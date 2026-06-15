@@ -23,8 +23,8 @@ export default function Header() {
     <header
       className={`sticky top-0 z-50 text-cream transition-all duration-500 ${
         scrolled
-          ? 'bg-dark/75 backdrop-blur-md border-b border-gold/15 py-0'
-          : 'bg-transparent border-b border-transparent py-0'
+          ? 'bg-dark/80 backdrop-blur-md border-b border-gold/15 py-0'
+          : 'bg-dark border-b border-transparent py-0'
       }`}
     >
       <Container
