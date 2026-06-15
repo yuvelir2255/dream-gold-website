@@ -119,8 +119,8 @@ export default function CatalogFilters({products, locale}: CatalogFiltersProps) 
 
   return (
     <div>
-      {/* Панель фильтров */}
-      <div className="mb-10 space-y-3 rounded-sm border border-line bg-cream p-5">
+      {/* Панель фильтров: стеклянный эффект — полупрозрачный фон + backdrop-blur */}
+      <div className="mb-10 space-y-3 rounded-sm border border-line/80 bg-cream/70 p-5 backdrop-blur-md shadow-sm sticky top-24 z-10">
         <FilterGroup
           label={t('filters.category')}
           options={categoryOptions}
