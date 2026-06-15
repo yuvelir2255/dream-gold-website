@@ -1,11 +1,16 @@
 'use client';
 
-import {useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
+import dynamic from 'next/dynamic';
 import {motion, useScroll, useTransform, useReducedMotion} from 'framer-motion';
 import {useTranslations} from 'next-intl';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import Reveal from '@/components/ui/Reveal';
+
+// 3D-бриллиант грузим лениво и только на клиенте (ssr: false):
+// он не должен исполняться на сервере и тянуться в бандл без нужды.
+const Gem = dynamic(() => import('@/components/three/Gem'), {ssr: false});
 
 // Кино-обложка на тёмном фоне с лёгким параллаксом.
 // Фоновый слой движется медленнее контента — создаёт глубину при прокрутке.
@@ -14,6 +19,17 @@ export default function Hero() {
   const t = useTranslations('hero');
   const ref = useRef<HTMLElement>(null);
   const prefersReduced = useReducedMotion();
+
+  // Показываем 3D-акцент ТОЛЬКО на десктопе и если пользователь не просил
+  // уменьшить анимацию. Стартуем с false и включаем в useEffect — так не будет
+  // расхождения при гидрации (на сервере состояние всегда false).
+  const [show3D, setShow3D] = useState(false);
+  useEffect(() => {
+    const ok =
+      window.matchMedia('(min-width: 1024px)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setShow3D(ok);
+  }, []);
 
   // Отслеживаем прокрутку hero-секции (от верха до её конца)
   const {scrollYProgress} = useScroll({
@@ -47,6 +63,13 @@ export default function Hero() {
               : {y: contentY, opacity: contentOpacity}
           }
         >
+          {/* 3D-бриллиант — лёгкий акцент над заголовком. Фиксированный размер,
+              не накладывается на текст. На мобайле / при reduced-motion не рендерится. */}
+          {show3D && (
+            <div className="mx-auto mb-2 h-40 w-40" aria-hidden="true">
+              <Gem />
+            </div>
+          )}
           <Reveal>
             <p className="mb-6 text-xs uppercase tracking-[0.45em] text-gold">Dream Gold</p>
           </Reveal>
