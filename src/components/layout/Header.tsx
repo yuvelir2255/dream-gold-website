@@ -6,38 +6,60 @@ import Container from '@/components/ui/Container';
 import Logo from './Logo';
 import LangSwitcher from './LangSwitcher';
 
-// Шапка на тёмном фоне (под белый логотип).
-// При прокрутке > 24px становится стеклянной (backdrop-blur + полупрозрачный фон).
+// Шапка на тёмном фоне (белый логотип).
+// При прокрутке > 24px: backdrop-blur + тёмная подложка (glass-эффект).
+// Навигация: увеличенный трекинг букв, золотой underline на ховере без сдвига layout.
 export default function Header() {
   const t = useTranslations('nav');
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 24);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener('scroll', onScroll, {passive: true});
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <header
-      className={`sticky top-0 z-50 text-cream transition-all duration-300 ${
+      className={`sticky top-0 z-50 text-cream transition-all duration-500 ${
         scrolled
-          ? 'bg-dark/70 backdrop-blur-md border-b border-gold/20'
-          : 'bg-dark border-b border-transparent'
+          ? 'bg-dark/75 backdrop-blur-md border-b border-gold/15 py-0'
+          : 'bg-transparent border-b border-transparent py-0'
       }`}
     >
-      <Container className="flex items-center justify-between py-5">
-        <Link href="/">
+      <Container
+        className={`flex items-center justify-between transition-all duration-500 ${
+          scrolled ? 'py-3' : 'py-6'
+        }`}
+      >
+        {/* Логотип */}
+        <Link href="/" className="flex-shrink-0">
           <Logo tone="light" />
         </Link>
-        <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-cream/80">
-          <Link href="/catalog" className="hover:text-gold transition-colors">{t('catalog')}</Link>
-          <Link href="/order" className="hover:text-gold transition-colors">{t('order')}</Link>
-          <Link href="/about" className="hover:text-gold transition-colors">{t('about')}</Link>
-          <Link href="/contacts" className="hover:text-gold transition-colors">{t('contacts')}</Link>
+
+        {/* Навигация: тонкий текст, широкий трекинг, gold-underline hover */}
+        <nav className="hidden md:flex items-center gap-10 text-[10px] uppercase tracking-[0.32em] text-cream/70">
+          {(
+            [
+              {key: 'catalog', href: '/catalog'},
+              {key: 'order',   href: '/order'},
+              {key: 'about',   href: '/about'},
+              {key: 'contacts',href: '/contacts'},
+            ] as const
+          ).map(({key, href}) => (
+            <Link
+              key={key}
+              href={href}
+              className="relative py-1 transition-colors duration-300 hover:text-cream
+                after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-gold
+                after:transition-all after:duration-300 hover:after:w-full"
+            >
+              {t(key)}
+            </Link>
+          ))}
         </nav>
+
+        {/* Переключатель языка */}
         <LangSwitcher />
       </Container>
     </header>
