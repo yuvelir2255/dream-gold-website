@@ -1,10 +1,12 @@
 import {notFound} from 'next/navigation';
 import {setRequestLocale, getTranslations} from 'next-intl/server';
+import {Link} from '@/i18n/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Section from '@/components/ui/Section';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
+import Reveal from '@/components/ui/Reveal';
 import Accordion from '@/components/catalog/Accordion';
 import ProductGallery from '@/components/catalog/ProductGallery';
 import {client} from '@/sanity/client';
@@ -36,6 +38,12 @@ export default async function ProductPage({
   // Масив порад по догляду з перекладів
   const careItems = tProduct.raw('static.care') as string[];
 
+  // Перекладена назва категорії — для эйброва над заголовком (якщо є)
+  let categoryLabel = '';
+  if (product.category) {
+    try { categoryLabel = tCatalog(`options.category.${product.category}`); } catch {}
+  }
+
   // Список характеристик (показуємо лише якщо є значення)
   const specs: {label: string; value: string}[] = [];
   if (product.category) {
@@ -65,87 +73,131 @@ export default async function ProductPage({
     if (val) specs.push({label: tProduct('spec.stones'), value: val});
   }
 
+  // Эйбров над заголовком: категорія, якщо є, інакше нейтральне «Виріб»
+  const eyebrow = categoryLabel || tProduct('eyebrow');
+
   return (
     <>
       <Header />
       <main>
         <Section className="bg-ivory">
           <Container>
+            {/* Хлібна крихта / повернення до каталогу */}
+            <Reveal>
+              <Link
+                href="/catalog"
+                className="group inline-flex items-center gap-2 font-body text-[11px] uppercase tracking-[0.26em] text-muted transition-colors duration-300 hover:text-gold-deep"
+              >
+                <span
+                  aria-hidden="true"
+                  className="inline-block h-px w-6 bg-gold transition-all duration-300 group-hover:w-9"
+                />
+                {tProduct('back')}
+              </Link>
+            </Reveal>
+
             {/* Двоколоночний макет: фото зліва, деталі справа */}
-            <div className="grid gap-12 md:grid-cols-2 md:gap-16 lg:gap-20">
+            <div className="mt-10 grid gap-12 md:grid-cols-2 md:gap-16 lg:gap-20">
 
               {/* Галерея */}
-              <ProductGallery
-                images={product.images || []}
-                alt={title}
-                video={product.video}
-              />
+              <Reveal>
+                <ProductGallery
+                  images={product.images || []}
+                  alt={title}
+                  video={product.video}
+                />
+              </Reveal>
 
-              {/* Права колонка: назва, характеристики, акордеони, CTA */}
+              {/* Права колонка: эйбров, назва, характеристики, акордеони, CTA */}
               <div className="flex flex-col">
-                <h1 className="font-heading text-3xl sm:text-4xl text-charcoal leading-tight">
-                  {title}
-                </h1>
+                {/* Эйбров: золота лінія + категорія вразрядку */}
+                <Reveal>
+                  <div className="flex items-center gap-3">
+                    <span className="h-px w-8 bg-gold/50" />
+                    <span className="font-body text-[10px] uppercase tracking-[0.4em] text-gold">
+                      {eyebrow}
+                    </span>
+                  </div>
+                </Reveal>
+
+                {/* Назва виробу — крупний serif */}
+                <Reveal delay={0.08}>
+                  <h1 className="mt-5 font-heading text-3xl leading-[1.05] tracking-tight text-charcoal sm:text-4xl lg:text-5xl">
+                    {title}
+                  </h1>
+                </Reveal>
 
                 {/* Характеристики */}
                 {specs.length > 0 && (
-                  <dl className="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-line pt-6">
-                    {specs.map(({label, value}) => (
-                      <div key={label}>
-                        <dt className="text-xs font-body uppercase tracking-widest text-muted">
-                          {label}
-                        </dt>
-                        <dd className="mt-0.5 text-sm font-body text-charcoal">
-                          {value}
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
+                  <Reveal delay={0.14}>
+                    <div className="mt-8 border-t border-line pt-8">
+                      <span className="flex items-center gap-2 font-body text-[10px] uppercase tracking-[0.3em] text-gold">
+                        <span aria-hidden="true" className="h-px w-4 bg-gold/50" />
+                        {tProduct('specsTitle')}
+                      </span>
+                      <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-5">
+                        {specs.map(({label, value}) => (
+                          <div key={label}>
+                            <dt className="font-body text-[10px] uppercase tracking-[0.24em] text-muted">
+                              {label}
+                            </dt>
+                            <dd className="mt-1 font-body text-sm text-charcoal">
+                              {value}
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                  </Reveal>
                 )}
 
                 {/* Акордеони */}
-                <div className="mt-8 border-t border-line">
+                <Reveal delay={0.2}>
+                  <div className="mt-8 border-t border-line">
 
-                  {/* Опис */}
-                  {description && (
-                    <Accordion title={tProduct('sections.description')} defaultOpen>
-                      <p>{description}</p>
+                    {/* Опис */}
+                    {description && (
+                      <Accordion title={tProduct('sections.description')} defaultOpen>
+                        <p>{description}</p>
+                      </Accordion>
+                    )}
+
+                    {/* Деталі (тільки якщо є) */}
+                    {details && (
+                      <Accordion title={tProduct('sections.details')}>
+                        <p>{details}</p>
+                      </Accordion>
+                    )}
+
+                    {/* Доставка */}
+                    <Accordion title={tProduct('sections.shipping')}>
+                      <p>{tProduct('static.shipping')}</p>
                     </Accordion>
-                  )}
 
-                  {/* Деталі (тільки якщо є) */}
-                  {details && (
-                    <Accordion title={tProduct('sections.details')}>
-                      <p>{details}</p>
+                    {/* Пакування */}
+                    <Accordion title={tProduct('sections.packaging')}>
+                      <p>{tProduct('static.packaging')}</p>
                     </Accordion>
-                  )}
 
-                  {/* Доставка */}
-                  <Accordion title={tProduct('sections.shipping')}>
-                    <p>{tProduct('static.shipping')}</p>
-                  </Accordion>
-
-                  {/* Пакування */}
-                  <Accordion title={tProduct('sections.packaging')}>
-                    <p>{tProduct('static.packaging')}</p>
-                  </Accordion>
-
-                  {/* Догляд */}
-                  <Accordion title={tProduct('sections.care')}>
-                    <ul className="list-disc space-y-1.5 pl-5">
-                      {careItems.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
-                  </Accordion>
-                </div>
+                    {/* Догляд */}
+                    <Accordion title={tProduct('sections.care')}>
+                      <ul className="list-disc space-y-1.5 pl-5">
+                        {careItems.map((item, i) => (
+                          <li key={i}>{item}</li>
+                        ))}
+                      </ul>
+                    </Accordion>
+                  </div>
+                </Reveal>
 
                 {/* CTA */}
-                <div className="mt-10">
-                  <Button href="/order" variant="solid">
-                    {tProduct('cta')}
-                  </Button>
-                </div>
+                <Reveal delay={0.26}>
+                  <div className="mt-10">
+                    <Button href="/order" variant="solid">
+                      {tProduct('cta')}
+                    </Button>
+                  </div>
+                </Reveal>
               </div>
             </div>
           </Container>
