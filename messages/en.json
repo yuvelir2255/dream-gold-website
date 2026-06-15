@@ -15,8 +15,9 @@
     "scrollCue": "Scroll"
   },
   "create": {
+    "eyebrow": "The process",
     "title": "Create your own piece",
-    "subtitle": "A simple path from idea to finished jewelry",
+    "subtitle": "Four steps from a first idea to a piece that exists nowhere else",
     "step1Title": "Idea or photo",
     "step1Desc": "Send us your idea or a photo reference of the piece you want.",
     "step2Title": "Metal and stone",
@@ -27,11 +28,13 @@
     "step4Desc": "We craft the piece at our own production and deliver it to you."
   },
   "works": {
-    "title": "Selected works",
-    "subtitle": "A few of our pieces",
+    "eyebrow": "Selected",
+    "title": "Made by our own hands",
+    "subtitle": "A few pieces from our atelier — each born from a client's idea",
     "cta": "View the full catalog"
   },
   "can": {
+    "eyebrow": "Capabilities",
     "title": "What we can do",
     "item1": "A piece from your photo or idea",
     "item2": "In the style of renowned jewelry houses",
@@ -41,8 +44,9 @@
     "item6": "Delivery across Ukraine and Europe"
   },
   "trust": {
-    "title": "Own production. Quality. Experience.",
-    "subtitle": "We control every step — from idea to finished jewelry.",
+    "eyebrow": "Why us",
+    "title": "Our own atelier. Impeccable quality. Experience.",
+    "subtitle": "We control every step — from the first sketch to the final setting.",
     "item1Value": "Own",
     "item1Label": "production",
     "item2Value": "585 / 750",
@@ -53,12 +57,14 @@
     "item4Label": "delivery"
   },
   "reviews": {
+    "eyebrow": "Testimonials",
     "title": "What clients say",
-    "subtitle": "Reviews from our customers"
+    "subtitle": "Stories from those who trusted us with their dream"
   },
   "finalCta": {
+    "eyebrow": "Commission",
     "title": "Let's create the jewelry of your dreams",
-    "subtitle": "Leave a request — we'll calculate individually",
+    "subtitle": "Leave a request — we'll calculate the price individually and get back to you.",
     "button": "Leave a request"
   },
   "footer": {
