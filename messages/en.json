@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "catalog": "Catalog",
+    "order": "Order",
+    "about": "About",
+    "contacts": "Contacts"
+  },
+  "hero": {
+    "title": "Jewelry born from your desire",
+    "subtitle": "Own production in Ukraine. Bespoke pieces and work from your reference.",
+    "ctaPrimary": "Create a piece",
+    "ctaSecondary": "View works"
+  },
+  "create": {
+    "title": "Create your own piece",
+    "subtitle": "A simple path from idea to finished jewelry",
+    "step1Title": "Idea or photo",
+    "step1Desc": "Send us your idea or a photo reference of the piece you want.",
+    "step2Title": "Metal and stone",
+    "step2Desc": "We choose the metal (585/750) and stone — natural or lab-grown diamond.",
+    "step3Title": "Calculation",
+    "step3Desc": "We calculate an individual price for your exact piece.",
+    "step4Title": "Crafting",
+    "step4Desc": "We craft the piece at our own production and deliver it to you."
+  },
+  "works": {
+    "title": "Selected works",
+    "subtitle": "A few of our pieces",
+    "cta": "View the full catalog"
+  },
+  "can": {
+    "title": "What we can do",
+    "item1": "A piece from your photo or idea",
+    "item2": "In the style of renowned jewelry houses",
+    "item3": "Melting your old gold into a new piece",
+    "item4": "Natural and lab-grown diamonds with certificates",
+    "item5": "585 and 750 gold",
+    "item6": "Delivery across Ukraine and Europe"
+  },
+  "trust": {
+    "title": "Own production. Quality. Experience.",
+    "subtitle": "We control every step — from idea to finished jewelry.",
+    "item1Value": "Own",
+    "item1Label": "production",
+    "item2Value": "585 / 750",
+    "item2Label": "gold purity",
+    "item3Value": "Certificates",
+    "item3Label": "for diamonds",
+    "item4Value": "Ukraine + Europe",
+    "item4Label": "delivery"
+  },
+  "reviews": {
+    "title": "What clients say",
+    "subtitle": "Reviews from our customers"
+  },
+  "finalCta": {
+    "title": "Let's create the jewelry of your dreams",
+    "subtitle": "Leave a request — we'll calculate individually",
+    "button": "Leave a request"
+  },
+  "footer": {
+    "tagline": "Jewelry house · bespoke orders",
+    "phone": "Phone",
+    "telegram": "Telegram",
+    "instagram": "Instagram",
+    "rights": "All rights reserved"
+  }
+}
