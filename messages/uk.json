@@ -64,5 +64,40 @@
     "telegram": "Telegram",
     "instagram": "Instagram",
     "rights": "Усі права захищені"
+  },
+  "catalog": {
+    "title": "Каталог",
+    "empty": "Поки що немає виробів. Завітайте трохи згодом.",
+    "filters": {
+      "all": "Усі",
+      "category": "Категорія",
+      "metal": "Метал",
+      "purity": "Проба",
+      "style": "Стиль"
+    },
+    "options": {
+      "category": {
+        "ring": "Каблучки",
+        "earrings": "Сережки",
+        "necklace": "Кольє та підвіски",
+        "bracelet": "Браслети",
+        "chain": "Ланцюжки",
+        "brooch": "Брошки"
+      },
+      "metal": {
+        "white": "Біле золото",
+        "yellow": "Жовте золото",
+        "rose": "Рожеве золото"
+      },
+      "purity": {
+        "585": "585",
+        "750": "750"
+      },
+      "style": {
+        "classic": "Класична",
+        "modern": "Сучасна",
+        "vintage": "Вінтаж"
+      }
+    }
   }
 }

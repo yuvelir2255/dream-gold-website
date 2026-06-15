@@ -64,5 +64,40 @@
     "telegram": "Telegram",
     "instagram": "Instagram",
     "rights": "All rights reserved"
+  },
+  "catalog": {
+    "title": "Catalog",
+    "empty": "No pieces yet. Please check back soon.",
+    "filters": {
+      "all": "All",
+      "category": "Category",
+      "metal": "Metal",
+      "purity": "Purity",
+      "style": "Style"
+    },
+    "options": {
+      "category": {
+        "ring": "Rings",
+        "earrings": "Earrings",
+        "necklace": "Necklaces",
+        "bracelet": "Bracelets",
+        "chain": "Chains",
+        "brooch": "Brooches"
+      },
+      "metal": {
+        "white": "White gold",
+        "yellow": "Yellow gold",
+        "rose": "Rose gold"
+      },
+      "purity": {
+        "585": "585",
+        "750": "750"
+      },
+      "style": {
+        "classic": "Classic",
+        "modern": "Modern",
+        "vintage": "Vintage"
+      }
+    }
   }
 }
