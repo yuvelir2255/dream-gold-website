@@ -1,12 +1,31 @@
 import {defineType, defineField} from 'sanity';
 
+// Транслитерация укр→латиница для аккуратных адресов: «Перлинні дуги» → «perlynni-duhy».
+const TRANSLIT: Record<string, string> = {
+  а: 'a', б: 'b', в: 'v', г: 'h', ґ: 'g', д: 'd', е: 'e', є: 'ie', ж: 'zh', з: 'z',
+  и: 'y', і: 'i', ї: 'i', й: 'i', к: 'k', л: 'l', м: 'm', н: 'n', о: 'o', п: 'p',
+  р: 'r', с: 's', т: 't', у: 'u', ф: 'f', х: 'kh', ц: 'ts', ч: 'ch', ш: 'sh',
+  щ: 'shch', ь: '', ю: 'iu', я: 'ia', "'": '', '’': ''
+};
+
+function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .split('')
+    .map((ch) => (ch in TRANSLIT ? TRANSLIT[ch] : ch))
+    .join('')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 96);
+}
+
 export const product = defineType({
   name: 'product',
   title: 'Виріб',
   type: 'document',
   fields: [
     defineField({name: 'title', title: 'Назва', type: 'localeString', validation: (r) => r.required()}),
-    defineField({name: 'slug', title: 'Slug (адреса)', type: 'slug', options: {source: 'title.uk'}, validation: (r) => r.required()}),
+    defineField({name: 'slug', title: 'Slug (адреса)', type: 'slug', options: {source: 'title.uk', slugify}, validation: (r) => r.required()}),
     defineField({name: 'images', title: 'Фото', type: 'array', of: [{type: 'image', options: {hotspot: true}}], validation: (r) => r.required().min(1)}),
     defineField({name: 'video', title: 'Відео (URL, необов’язково)', type: 'url'}),
     defineField({name: 'category', title: 'Тип', type: 'string', options: {list: [

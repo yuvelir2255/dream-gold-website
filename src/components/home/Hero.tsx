@@ -1,7 +1,6 @@
 'use client';
 
-import {useEffect, useRef, useState} from 'react';
-import dynamic from 'next/dynamic';
+import {useRef} from 'react';
 import {motion, useScroll, useTransform, useReducedMotion} from 'framer-motion';
 import {useTranslations} from 'next-intl';
 import Container from '@/components/ui/Container';
@@ -9,8 +8,7 @@ import Button from '@/components/ui/Button';
 import Reveal from '@/components/ui/Reveal';
 import GrainOverlay from '@/components/ui/GrainOverlay';
 
-// 3D-бриллиант грузим лениво — только на клиенте (ssr: false):
-const Gem = dynamic(() => import('@/components/three/Gem'), {ssr: false});
+// (3D-бриллиант убран по просьбе владельца — в hero статичный золотой контур.)
 
 // Статичная SVG-иконка алмаза — показывается по умолчанию (сервер + первый рендер клиента),
 // потом меняется на 3D, если устройство/настройки подходят.
@@ -108,29 +106,6 @@ export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const prefersReduced = useReducedMotion();
 
-  // Gem: старт всегда false (совпадает между сервером и первым клиентским рендером).
-  // После монтирования проверяем устройство/WebGL и включаем 3D если можно.
-  const [show3D, setShow3D] = useState(false);
-  useEffect(() => {
-    const wide = window.matchMedia('(min-width: 1024px)').matches;
-    // WebGL: пробуем webgl2 / webgl / experimental-webgl — разные браузеры и конфиги.
-    let webgl = false;
-    try {
-      const c = document.createElement('canvas');
-      webgl = !!(
-        c.getContext('webgl2') ||
-        c.getContext('webgl') ||
-        c.getContext('experimental-webgl')
-      );
-    } catch {
-      webgl = false;
-    }
-    // 3D-бриллиант — фирменная фишка: показываем на десктопе при наличии WebGL.
-    // reduced-motion НЕ блокирует сам камень (владелец хочет его видеть);
-    // параллакс и появления секций по-прежнему уважают reduced-motion.
-    setShow3D(wide && webgl);
-  }, []);
-
   // Параллакс: диапазоны разные при reduced-motion, но НАЧАЛЬНОЕ значение (scroll=0)
   // всегда '0%' / 1 — поэтому inline-style на сервере и клиенте совпадает, нет mismatch.
   const {scrollYProgress} = useScroll({
@@ -214,15 +189,14 @@ export default function Hero() {
             </div>
           </Reveal>
 
-          {/* Gem-контейнер фиксированного размера — всегда в DOM, меняем содержимое */}
+          {/* Золотой контур-бриллиант — статичный изящный акцент */}
           <Reveal delay={0.08}>
             <div
               className="mx-auto mb-6 flex items-center justify-center lg:mb-8"
               style={{width: 208, height: 208}}
               aria-hidden="true"
             >
-              {/* Статичная SVG — дефолт. После useEffect может смениться на 3D */}
-              {show3D ? <Gem /> : <DiamondIcon />}
+              <DiamondIcon />
             </div>
           </Reveal>
 
