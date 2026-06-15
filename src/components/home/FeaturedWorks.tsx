@@ -3,12 +3,14 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import Reveal from '@/components/ui/Reveal';
+import SectionHeading from '@/components/ui/SectionHeading';
 import ProductCard from '@/components/catalog/ProductCard';
 import type {ProductCardData} from '@/components/catalog/ProductCard';
 import {client} from '@/sanity/client';
 import {FEATURED_PRODUCTS} from '@/lib/queries';
 
-// Витрина вибраних робіт на головній. Дані з CMS; якщо порожньо — плейсхолдери.
+// Витрина вибраних робіт на головній — як редакційна галерея.
+// Дані з CMS; якщо порожньо — елегантні плейсхолдери. Логіка fetch не змінена.
 export default async function FeaturedWorks() {
   const t = await getTranslations('works');
   const locale = await getLocale();
@@ -20,12 +22,28 @@ export default async function FeaturedWorks() {
   return (
     <Section className="bg-champagne">
       <Container>
-        <Reveal className="text-center">
-          <h2 className="text-3xl sm:text-4xl">{t('title')}</h2>
-          <p className="mt-3 text-muted">{t('subtitle')}</p>
+        {/* Редакционная «шапка»: заголовок слева, CTA справа (на десктопе) */}
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <SectionHeading
+            eyebrow={t('eyebrow')}
+            title={t('title')}
+            subtitle={t('subtitle')}
+            tone="light"
+            align="left"
+            className="md:max-w-xl"
+          />
+          {/* CTA в одну строку с заголовком на десктопе */}
+          <Reveal delay={0.2} className="hidden shrink-0 md:block">
+            <Button href="/catalog" variant="outline">{t('cta')}</Button>
+          </Reveal>
+        </div>
+
+        {/* Тонкая золотая линия-разделитель под шапкой */}
+        <Reveal delay={0.1}>
+          <div className="mt-10 h-px w-full bg-gold/20" />
         </Reveal>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-3">
           {products.length > 0
             ? products.map((product, i) => (
                 <Reveal key={product._id} delay={i * 0.1}>
@@ -34,14 +52,41 @@ export default async function FeaturedWorks() {
               ))
             : placeholders.map((n, i) => (
                 <Reveal key={n} delay={i * 0.1}>
-                  <div className="flex aspect-[3/4] items-center justify-center rounded-sm bg-cream text-sm text-muted">
-                    фото виробу
+                  {/* Элегантный плейсхолдер: рамка-хайрлайн + тонкий ромб + подпись */}
+                  <div className="group flex aspect-[4/5] flex-col items-center justify-center gap-4 rounded-sm border border-line bg-cream/60 transition-colors duration-300 hover:border-gold/40">
+                    <svg
+                      width="40"
+                      height="40"
+                      viewBox="0 0 96 96"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <polygon
+                        points="48,8 88,40 48,88 8,40"
+                        stroke="#C4A052"
+                        strokeWidth="1.5"
+                        fill="none"
+                        opacity="0.7"
+                      />
+                      <polyline
+                        points="8,40 48,24 88,40"
+                        stroke="#C4A052"
+                        strokeWidth="1"
+                        fill="none"
+                        opacity="0.5"
+                      />
+                    </svg>
+                    <span className="font-body text-[11px] uppercase tracking-[0.3em] text-muted">
+                      Dream Gold
+                    </span>
                   </div>
                 </Reveal>
               ))}
         </div>
 
-        <Reveal className="mt-12 text-center">
+        {/* CTA для мобильных (на десктопе он в шапке) */}
+        <Reveal className="mt-12 text-center md:hidden">
           <Button href="/catalog" variant="outline">{t('cta')}</Button>
         </Reveal>
       </Container>
