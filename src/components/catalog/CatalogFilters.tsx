@@ -2,6 +2,7 @@
 
 import {useState} from 'react';
 import {useTranslations} from 'next-intl';
+import Reveal from '@/components/ui/Reveal';
 import ProductCard, {type ProductCardData} from './ProductCard';
 import {CATEGORIES, METALS, PURITIES, STYLES} from '@/lib/catalogOptions';
 
@@ -16,8 +17,9 @@ interface FilterOption {
   label: string;
 }
 
-// Кнопка выбора фильтра
-function FilterButton({
+// Пилюля выбора фильтра.
+// Активная — сплошное золото; неактивная — хайрлайн-контур, золотится по ховеру.
+function FilterPill({
   active,
   onClick,
   children,
@@ -28,11 +30,13 @@ function FilterButton({
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className={`px-4 py-1.5 rounded-full border text-sm font-body transition-colors duration-200 ${
+      aria-pressed={active}
+      className={`cursor-pointer rounded-full px-4 py-1.5 font-body text-[13px] tracking-wide transition-all duration-300 ${
         active
-          ? 'bg-gold border-gold text-cream'
-          : 'border-line text-muted hover:border-gold hover:text-charcoal'
+          ? 'bg-gold text-dark shadow-sm shadow-gold/30'
+          : 'border border-line text-muted hover:border-gold/60 hover:text-charcoal'
       }`}
     >
       {children}
@@ -40,7 +44,7 @@ function FilterButton({
   );
 }
 
-// Группа фильтров (одна строка с кнопками)
+// Группа фильтров: золотая разрядка-лейбл + ряд пилюль.
 function FilterGroup({
   label,
   options,
@@ -53,19 +57,22 @@ function FilterGroup({
   onSelect: (value: string) => void;
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <span className="text-xs font-body uppercase tracking-widest text-muted mr-1 min-w-[4rem]">
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <span className="flex shrink-0 items-center gap-2 font-body text-[10px] uppercase tracking-[0.3em] text-gold sm:w-28">
+        <span aria-hidden="true" className="h-px w-4 bg-gold/50" />
         {label}
       </span>
-      {options.map((opt) => (
-        <FilterButton
-          key={opt.value}
-          active={selected === opt.value}
-          onClick={() => onSelect(selected === opt.value ? 'all' : opt.value)}
-        >
-          {opt.label}
-        </FilterButton>
-      ))}
+      <div className="flex flex-wrap gap-2">
+        {options.map((opt) => (
+          <FilterPill
+            key={opt.value}
+            active={selected === opt.value}
+            onClick={() => onSelect(selected === opt.value ? 'all' : opt.value)}
+          >
+            {opt.label}
+          </FilterPill>
+        ))}
+      </div>
     </div>
   );
 }
@@ -110,6 +117,17 @@ export default function CatalogFilters({products, locale}: CatalogFiltersProps) 
     return true;
   });
 
+  // Есть ли активный фильтр (для показа кнопки «Скинути»)
+  const hasActiveFilter =
+    category !== 'all' || metal !== 'all' || purity !== 'all' || style !== 'all';
+
+  const resetAll = () => {
+    setCategory('all');
+    setMetal('all');
+    setPurity('all');
+    setStyle('all');
+  };
+
   // Найти метку категории для карточки
   const getCategoryLabel = (cat?: string): string => {
     if (!cat) return '';
@@ -119,46 +137,79 @@ export default function CatalogFilters({products, locale}: CatalogFiltersProps) 
 
   return (
     <div>
-      {/* Панель фильтров: стеклянный эффект — полупрозрачный фон + backdrop-blur */}
-      <div className="mb-10 space-y-3 rounded-sm border border-line/80 bg-cream/70 p-5 backdrop-blur-md shadow-sm sticky top-24 z-10">
-        <FilterGroup
-          label={t('filters.category')}
-          options={categoryOptions}
-          selected={category}
-          onSelect={setCategory}
-        />
-        <FilterGroup
-          label={t('filters.metal')}
-          options={metalOptions}
-          selected={metal}
-          onSelect={setMetal}
-        />
-        <FilterGroup
-          label={t('filters.purity')}
-          options={purityOptions}
-          selected={purity}
-          onSelect={setPurity}
-        />
-        <FilterGroup
-          label={t('filters.style')}
-          options={styleOptions}
-          selected={style}
-          onSelect={setStyle}
-        />
+      {/* Панель фильтров: стеклянный эффект — полупрозрачный фон + backdrop-blur,
+          тонкая золотая рамка, липкая под шапкой. */}
+      <Reveal>
+        <div className="sticky top-24 z-10 rounded-sm border border-line bg-cream/75 p-6 shadow-[0_10px_40px_-28px_rgba(31,27,22,0.4)] backdrop-blur-md sm:p-7">
+          <div className="space-y-5">
+            <FilterGroup
+              label={t('filters.category')}
+              options={categoryOptions}
+              selected={category}
+              onSelect={setCategory}
+            />
+            <div className="h-px w-full bg-line/70" />
+            <FilterGroup
+              label={t('filters.metal')}
+              options={metalOptions}
+              selected={metal}
+              onSelect={setMetal}
+            />
+            <div className="h-px w-full bg-line/70" />
+            <FilterGroup
+              label={t('filters.purity')}
+              options={purityOptions}
+              selected={purity}
+              onSelect={setPurity}
+            />
+            <div className="h-px w-full bg-line/70" />
+            <FilterGroup
+              label={t('filters.style')}
+              options={styleOptions}
+              selected={style}
+              onSelect={setStyle}
+            />
+          </div>
+        </div>
+      </Reveal>
+
+      {/* Строка результатов: счётчик слева + сброс справа */}
+      <div className="mb-8 mt-8 flex items-center justify-between border-b border-line pb-4">
+        <span className="font-body text-[11px] uppercase tracking-[0.28em] text-muted">
+          {t('count', {count: filtered.length})}
+        </span>
+        {hasActiveFilter && (
+          <button
+            type="button"
+            onClick={resetAll}
+            className="group inline-flex cursor-pointer items-center gap-2 font-body text-[11px] uppercase tracking-[0.24em] text-muted transition-colors duration-300 hover:text-gold-deep"
+          >
+            <span
+              aria-hidden="true"
+              className="text-base leading-none text-gold transition-transform duration-300 group-hover:rotate-90"
+            >
+              +
+            </span>
+            {t('filters.reset')}
+          </button>
+        )}
       </div>
 
       {/* Сетка карточек */}
       {filtered.length === 0 ? (
-        <p className="py-16 text-center font-body text-muted">{t('empty')}</p>
+        <p className="py-20 text-center font-body text-sm font-light leading-relaxed text-muted">
+          {t('empty')}
+        </p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((product) => (
-            <ProductCard
-              key={product._id}
-              product={product}
-              locale={locale}
-              categoryLabel={getCategoryLabel(product.category)}
-            />
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {filtered.map((product, i) => (
+            <Reveal key={product._id} delay={(i % 3) * 0.08}>
+              <ProductCard
+                product={product}
+                locale={locale}
+                categoryLabel={getCategoryLabel(product.category)}
+              />
+            </Reveal>
           ))}
         </div>
       )}

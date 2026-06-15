@@ -76,14 +76,18 @@
   },
   "catalog": {
     "title": "Catalog",
+    "eyebrow": "The collection",
+    "intro": "Every piece is born from a client's idea and crafted at our own atelier. Choose the one that speaks to you — or commission your own.",
     "empty": "No pieces yet. Please check back soon.",
     "filters": {
       "all": "All",
       "category": "Category",
       "metal": "Metal",
       "purity": "Purity",
-      "style": "Style"
+      "style": "Style",
+      "reset": "Reset"
     },
+    "count": "{count, plural, one {# piece} other {# pieces}}",
     "options": {
       "category": {
         "ring": "Rings",
@@ -115,6 +119,9 @@
   },
   "product": {
     "cta": "I want one like this",
+    "back": "Back to catalog",
+    "eyebrow": "The piece",
+    "specsTitle": "Specifications",
     "spec": {
       "category": "Type",
       "metal": "Metal",
