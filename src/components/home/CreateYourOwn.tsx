@@ -1,7 +1,7 @@
 'use client';
 
 import {useRef} from 'react';
-import {motion, useScroll, useTransform, useReducedMotion} from 'framer-motion';
+import {motion, useScroll, useTransform} from 'framer-motion';
 import {useTranslations} from 'next-intl';
 import Container from '@/components/ui/Container';
 import Reveal from '@/components/ui/Reveal';
@@ -12,7 +12,6 @@ import Reveal from '@/components/ui/Reveal';
 export default function CreateYourOwn() {
   const t = useTranslations('create');
   const sectionRef = useRef<HTMLElement>(null);
-  const prefersReduced = useReducedMotion();
 
   const steps = [
     {n: '01', title: t('step1Title'), desc: t('step1Desc')},
@@ -49,11 +48,7 @@ export default function CreateYourOwn() {
           <div className="hidden lg:block absolute left-0 right-0 top-[1.5rem] z-0">
             <motion.div
               className="h-px bg-gold origin-left"
-              style={
-                prefersReduced
-                  ? {scaleX: 1}
-                  : {scaleX: lineProgress}
-              }
+              style={{scaleX: lineProgress}}
             />
           </div>
 

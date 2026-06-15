@@ -25,10 +25,16 @@ export default function Hero() {
   // расхождения при гидрации (на сервере состояние всегда false).
   const [show3D, setShow3D] = useState(false);
   useEffect(() => {
-    const ok =
-      window.matchMedia('(min-width: 1024px)').matches &&
-      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    setShow3D(ok);
+    const wide = window.matchMedia('(min-width: 1024px)').matches;
+    const notReduced = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Проверяем поддержку WebGL — без него 3D мог бы уронить страницу.
+    let webgl = false;
+    try {
+      webgl = !!document.createElement('canvas').getContext('webgl');
+    } catch {
+      webgl = false;
+    }
+    setShow3D(wide && notReduced && webgl);
   }, []);
 
   // Отслеживаем прокрутку hero-секции (от верха до её конца)
@@ -37,31 +43,26 @@ export default function Hero() {
     offset: ['start start', 'end start'],
   });
 
-  // Фон движется медленнее (опускается), создавая параллакс-эффект.
-  // Слой увеличен на 30% (±15%), поэтому края никогда не обнажаются.
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
-
-  // Контент слегка уплывает вверх и растворяется при прокрутке вниз
-  const contentY = useTransform(scrollYProgress, [0, 0.85], ['0%', '10%']);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  // Диапазоны зависят от reduced-motion, НО выход при scroll=0 одинаков ('0%' и opacity 1),
+  // поэтому inline-стиль на сервере и клиенте совпадает → нет hydration mismatch.
+  // (Раньше мы переключали сам style по reduced-motion — это и ломало гидрацию.)
+  const bgY = useTransform(scrollYProgress, [0, 1], prefersReduced ? ['0%', '0%'] : ['0%', '18%']);
+  const contentY = useTransform(scrollYProgress, [0, 0.85], prefersReduced ? ['0%', '0%'] : ['0%', '10%']);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.85], prefersReduced ? [1, 1] : [1, 0]);
 
   return (
     <section ref={ref} className="relative overflow-hidden bg-dark text-cream">
       {/* Фоновый слой: увеличен ±15% по вертикали, чтобы движение не обнажало края */}
       <motion.div
         className="absolute -inset-x-0 -top-[15%] -bottom-[15%] bg-gradient-to-b from-[#15120E] via-[#221b12] to-[#15120E]"
-        style={prefersReduced ? undefined : {y: bgY}}
+        style={{y: bgY}}
       />
 
       {/* Контент hero: плавно уплывает вверх и гаснет при скролле */}
       <Container className="relative">
         <motion.div
           className="flex min-h-[78vh] flex-col items-center justify-center py-24 text-center"
-          style={
-            prefersReduced
-              ? undefined
-              : {y: contentY, opacity: contentOpacity}
-          }
+          style={{y: contentY, opacity: contentOpacity}}
         >
           {/* 3D-бриллиант — лёгкий акцент над заголовком. Фиксированный размер,
               не накладывается на текст. На мобайле / при reduced-motion не рендерится. */}
