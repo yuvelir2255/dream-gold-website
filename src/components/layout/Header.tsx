@@ -1,3 +1,5 @@
+'use client';
+import {useState, useEffect} from 'react';
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/navigation';
 import Container from '@/components/ui/Container';
@@ -5,10 +7,27 @@ import Logo from './Logo';
 import LangSwitcher from './LangSwitcher';
 
 // Шапка на тёмном фоне (под белый логотип).
+// При прокрутке > 24px становится стеклянной (backdrop-blur + полупрозрачный фон).
 export default function Header() {
   const t = useTranslations('nav');
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+    };
+    window.addEventListener('scroll', onScroll, {passive: true});
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <header className="bg-dark text-cream">
+    <header
+      className={`sticky top-0 z-50 text-cream transition-all duration-300 ${
+        scrolled
+          ? 'bg-dark/70 backdrop-blur-md border-b border-gold/20'
+          : 'bg-dark border-b border-transparent'
+      }`}
+    >
       <Container className="flex items-center justify-between py-5">
         <Link href="/">
           <Logo tone="light" />
