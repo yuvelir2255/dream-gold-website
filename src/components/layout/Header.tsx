@@ -5,6 +5,7 @@ import {Link} from '@/i18n/navigation';
 import Container from '@/components/ui/Container';
 import Logo from './Logo';
 import LangSwitcher from './LangSwitcher';
+import WishlistLink from '@/components/favorites/WishlistLink';
 
 // Шапка на тёмном фоне (белый логотип).
 // При прокрутке > 24px: backdrop-blur + тёмная подложка (glass-эффект).
@@ -59,8 +60,11 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Переключатель языка */}
-        <LangSwitcher />
+        {/* Избранное + переключатель языка */}
+        <div className="flex items-center gap-5">
+          <WishlistLink />
+          <LangSwitcher />
+        </div>
       </Container>
     </header>
   );

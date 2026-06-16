@@ -6,6 +6,7 @@ import Reveal from '@/components/ui/Reveal';
 import SectionHeading from '@/components/ui/SectionHeading';
 import ProductCard from '@/components/catalog/ProductCard';
 import type {ProductCardData} from '@/components/catalog/ProductCard';
+import PhotoSlot from '@/components/ui/PhotoSlot';
 import {client} from '@/sanity/client';
 import {FEATURED_PRODUCTS} from '@/lib/queries';
 
@@ -52,35 +53,8 @@ export default async function FeaturedWorks() {
               ))
             : placeholders.map((n, i) => (
                 <Reveal key={n} delay={i * 0.1}>
-                  {/* Элегантный плейсхолдер: рамка-хайрлайн + тонкий ромб + подпись */}
-                  <div className="group flex aspect-[4/5] flex-col items-center justify-center gap-4 rounded-sm border border-line bg-cream/60 transition-colors duration-300 hover:border-gold/40">
-                    <svg
-                      width="40"
-                      height="40"
-                      viewBox="0 0 96 96"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                    >
-                      <polygon
-                        points="48,8 88,40 48,88 8,40"
-                        stroke="#C4A052"
-                        strokeWidth="1.5"
-                        fill="none"
-                        opacity="0.7"
-                      />
-                      <polyline
-                        points="8,40 48,24 88,40"
-                        stroke="#C4A052"
-                        strokeWidth="1"
-                        fill="none"
-                        opacity="0.5"
-                      />
-                    </svg>
-                    <span className="font-body text-[11px] uppercase tracking-[0.3em] text-muted">
-                      Dream Gold
-                    </span>
-                  </div>
+                  {/* Слот под будущее фото изделия (4:5) */}
+                  <PhotoSlot ratio="4 / 5" hint="4:5 · 1600×2000" note="Виріб на світлому фоні" />
                 </Reveal>
               ))}
         </div>

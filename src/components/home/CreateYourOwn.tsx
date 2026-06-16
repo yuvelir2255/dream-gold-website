@@ -3,6 +3,7 @@
 import {useRef} from 'react';
 import {motion, useScroll, useTransform} from 'framer-motion';
 import {useTranslations} from 'next-intl';
+import {Link} from '@/i18n/navigation';
 import Container from '@/components/ui/Container';
 import Reveal from '@/components/ui/Reveal';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -84,6 +85,22 @@ export default function CreateYourOwn() {
             ))}
           </div>
         </div>
+
+        {/* Ссылка на подробную страницу процесса */}
+        <Reveal>
+          <div className="mt-16 text-center">
+            <Link
+              href="/process"
+              className="group inline-flex items-center gap-2 font-body text-[11px] uppercase tracking-[0.26em] text-muted transition-colors duration-300 hover:text-gold-deep"
+            >
+              {t('processLink')}
+              <span
+                aria-hidden="true"
+                className="inline-block h-px w-6 bg-gold transition-all duration-300 group-hover:w-10"
+              />
+            </Link>
+          </div>
+        </Reveal>
       </Container>
     </section>
   );

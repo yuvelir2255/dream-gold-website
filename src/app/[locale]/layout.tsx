@@ -5,6 +5,7 @@ import {notFound} from 'next/navigation';
 import {EB_Garamond, Montserrat} from 'next/font/google';
 import {routing} from '@/i18n/routing';
 import SmoothScroll from '@/components/ui/SmoothScroll';
+import {WishlistProvider} from '@/components/favorites/WishlistContext';
 import '../globals.css';
 
 // Заголовочный serif с кириллицей + латиницей
@@ -49,7 +50,11 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${ebGaramond.variable} ${montserrat.variable}`}>
       <body>
-        <NextIntlClientProvider><SmoothScroll>{children}</SmoothScroll></NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <WishlistProvider>
+            <SmoothScroll>{children}</SmoothScroll>
+          </WishlistProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

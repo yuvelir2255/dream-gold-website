@@ -193,7 +193,8 @@ export default async function ProductPage({
                 {/* CTA */}
                 <Reveal delay={0.26}>
                   <div className="mt-10">
-                    <Button href="/order" variant="solid">
+                    {/* Передаємо назву виробу у форму як «натхнення» (?ref=) */}
+                    <Button href={`/order?ref=${encodeURIComponent(title)}`} variant="solid">
                       {tProduct('cta')}
                     </Button>
                   </div>

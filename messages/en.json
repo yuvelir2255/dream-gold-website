@@ -12,7 +12,8 @@
     "subtitle": "Our own atelier in Ukraine. Bespoke jewellery made to order — from your idea, a photo, or pure inspiration.",
     "ctaPrimary": "Create your piece",
     "ctaSecondary": "View the works",
-    "scrollCue": "Scroll"
+    "scrollCue": "Scroll",
+    "photoHint": "Full-screen photo here · on model"
   },
   "create": {
     "eyebrow": "The process",
@@ -25,7 +26,8 @@
     "step3Title": "Calculation",
     "step3Desc": "We calculate an individual price for your exact piece.",
     "step4Title": "Crafting",
-    "step4Desc": "We craft the piece at our own production and deliver it to you."
+    "step4Desc": "We craft the piece at our own production and deliver it to you.",
+    "processLink": "How an order works"
   },
   "works": {
     "eyebrow": "Selected",
@@ -146,5 +148,103 @@
         "Protect from impacts and chemicals; store each piece separately in a soft pouch."
       ]
     }
+  },
+  "order": {
+    "eyebrow": "Bespoke commission",
+    "title": "Create your own piece",
+    "intro": "Tell us about the jewellery of your dreams — we'll calculate the price individually and get back to you on Telegram or by phone.",
+    "refLabel": "Inspiration",
+    "refHint": "The piece that inspired you",
+    "refClear": "Remove",
+    "step1": "Your idea",
+    "step1Hint": "Describe the piece: type, style, occasion, wishes. You may add a link to a photo reference.",
+    "ideaLabel": "Description",
+    "ideaPlaceholder": "For example: a white-gold ring with a natural diamond, classic style, for an anniversary…",
+    "step2": "Piece details",
+    "step2Hint": "Optional — this helps us calculate more precisely.",
+    "categoryLabel": "Type",
+    "metalLabel": "Metal",
+    "purityLabel": "Purity",
+    "sizeLabel": "Size",
+    "sizePlaceholder": "e.g. ring size 17",
+    "optional": "optional",
+    "step3": "Your contacts",
+    "step3Hint": "We'll receive your request on Telegram and contact you shortly.",
+    "nameLabel": "Name",
+    "namePlaceholder": "How should we address you",
+    "contactLabel": "Phone or Telegram",
+    "contactPlaceholder": "+380… or @username",
+    "submit": "Send request",
+    "sending": "Sending…",
+    "successTitle": "Thank you! Your request has been sent.",
+    "successText": "We've received your request and will contact you shortly. Have a wonderful day!",
+    "successBack": "Back to home",
+    "errorTitle": "Could not send",
+    "errorText": "Something went wrong. Please try again or message us directly on Telegram.",
+    "errorRetry": "Try again",
+    "errorTelegram": "Message on Telegram",
+    "required": "Please fill in this field",
+    "privacy": "By clicking “Send”, you agree that we may contact you regarding your order."
+  },
+  "editorial": {
+    "eyebrow": "Lookbook",
+    "photo": "Photo",
+    "title": "Light, metal, skin",
+    "subtitle": "Atmospheric and on-model imagery — to show each piece in life, not only on a shelf.",
+    "shot1": "Campaign · wide shot",
+    "shot2": "On model · close-up",
+    "shot3": "Product detail · macro"
+  },
+  "craft": {
+    "eyebrow": "Craftsmanship",
+    "photoLabel": "Photo",
+    "title": "Made by hand, with soul",
+    "p1": "Every piece is born at our own atelier in Ukraine — from the first sketch to the final setting. We control every step.",
+    "p2": "Experience, precision and respect for the material — what sets handcrafted apart from mass-produced.",
+    "photo1": "Master at work · process",
+    "photo2": "Detail · setting macro"
+  },
+  "service": {
+    "delivery": "Delivery across Ukraine & Europe",
+    "deliveryNote": "Secure and insured",
+    "certificate": "Diamond certificates",
+    "certificateNote": "Natural and lab-grown",
+    "packaging": "Branded packaging",
+    "packagingNote": "Every piece in a gift case",
+    "consult": "Personal consultation",
+    "consultNote": "We advise and price just for you"
+  },
+  "favorites": {
+    "eyebrow": "Saved",
+    "nav": "Wishlist",
+    "title": "Wishlist",
+    "intro": "The pieces you saved. Happy to discuss any — just leave a request.",
+    "empty": "Nothing here yet.",
+    "emptyHint": "Save pieces with the heart on a card — and they'll appear here.",
+    "emptyCta": "Back to catalog",
+    "add": "Add to wishlist",
+    "remove": "Remove from wishlist"
+  },
+  "process": {
+    "eyebrow": "The process",
+    "title": "How an order works",
+    "intro": "From the first idea to the finished piece in your hands — transparent and under your control at every step.",
+    "photoLabel": "Photo",
+    "photoNote": "Creation process · atelier",
+    "step1Title": "Request & idea",
+    "step1Desc": "You leave a request: a description, a photo reference, or a sketch of the piece you want.",
+    "step2Title": "Consultation & sketch",
+    "step2Desc": "We discuss the details, metal and stones, and propose a sketch of the future piece.",
+    "step3Title": "Individual quote",
+    "step3Desc": "We price your exact piece — no template prices.",
+    "step4Title": "Deposit",
+    "step4Desc": "Once everything is agreed, you place a deposit — and we begin the work.",
+    "step5Title": "Crafting",
+    "step5Desc": "We craft the piece at our own atelier in Ukraine, controlling every step.",
+    "step6Title": "Quality control & delivery",
+    "step6Desc": "We check the setting and details, add certificates, and deliver across Ukraine and Europe.",
+    "ctaTitle": "Ready to begin?",
+    "ctaText": "Tell us about the jewelry of your dreams — we'll get back to you.",
+    "ctaButton": "Leave a request"
   }
 }

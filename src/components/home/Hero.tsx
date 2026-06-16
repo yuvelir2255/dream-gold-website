@@ -8,45 +8,10 @@ import Button from '@/components/ui/Button';
 import Reveal from '@/components/ui/Reveal';
 import GrainOverlay from '@/components/ui/GrainOverlay';
 
-// (3D-бриллиант убран по просьбе владельца — в hero статичный золотой контур.)
-
-// Статичная SVG-иконка алмаза — показывается по умолчанию (сервер + первый рендер клиента),
-// потом меняется на 3D, если устройство/настройки подходят.
-function DiamondIcon() {
-  return (
-    <svg
-      width="96"
-      height="96"
-      viewBox="0 0 96 96"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      {/* Тонкий контурный ромб в стиле maison */}
-      <polygon
-        points="48,8 88,40 48,88 8,40"
-        stroke="#C4A052"
-        strokeWidth="1"
-        fill="none"
-        opacity="0.9"
-      />
-      {/* Верхняя грань */}
-      <polyline
-        points="8,40 48,24 88,40"
-        stroke="#C4A052"
-        strokeWidth="0.75"
-        fill="none"
-        opacity="0.6"
-      />
-      {/* Вертикальная ось от вершины до пояса */}
-      <line x1="48" y1="8" x2="48" y2="24" stroke="#C4A052" strokeWidth="0.75" opacity="0.5" />
-      {/* Нижние грани */}
-      <line x1="8" y1="40" x2="48" y2="88" stroke="#C4A052" strokeWidth="0.75" opacity="0.5" />
-      <line x1="88" y1="40" x2="48" y2="88" stroke="#C4A052" strokeWidth="0.75" opacity="0.5" />
-      <line x1="48" y1="24" x2="48" y2="88" stroke="#C4A052" strokeWidth="0.5" opacity="0.3" />
-    </svg>
-  );
-}
+// Hero теперь ФОТО-ОРИЕНТИРОВАННЫЙ (как у Cartier/Tiffany/Messika): на весь экран идёт
+// большое фото (изделие на модели / атмосфера), а текст и кнопки — поверх него.
+// Пока реального фото нет — тёмный «киношный» backdrop + бейдж-подсказка «тут будет фото».
+// Когда фото появится: заменить слой фона (motion.div со «Слой 1») на <Image fill .../> + скрим.
 
 // Тонкий рамочный акцент — линии по углам viewport, маньеристская «маисон-рамка».
 function MaisonFrame() {
@@ -165,6 +130,16 @@ export default function Hero() {
         }}
       />
 
+      {/* ─── Скрим под текст: чтобы заголовок читался поверх будущего фото ─── */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 95% 75% at 50% 58%, rgba(15,10,6,0.55) 0%, transparent 72%)',
+        }}
+      />
+
       {/* ─── Слой 4: плёночное зерно ─── */}
       <GrainOverlay />
 
@@ -186,17 +161,6 @@ export default function Hero() {
                 {t('eyebrow')}
               </span>
               <div className="h-px w-12 bg-gold/40" />
-            </div>
-          </Reveal>
-
-          {/* Золотой контур-бриллиант — статичный изящный акцент */}
-          <Reveal delay={0.08}>
-            <div
-              className="mx-auto mb-6 flex items-center justify-center lg:mb-8"
-              style={{width: 208, height: 208}}
-              aria-hidden="true"
-            >
-              <DiamondIcon />
             </div>
           </Reveal>
 
@@ -251,6 +215,18 @@ export default function Hero() {
 
         </motion.div>
       </Container>
+
+      {/* Бейдж-подсказка: сюда пойдёт фото на весь экран (временно, до загрузки реального фото) */}
+      <div className="pointer-events-none absolute bottom-7 left-7 z-10 flex items-center gap-2 rounded-full border border-dashed border-gold/40 bg-dark/40 px-4 py-2 backdrop-blur-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="1.5" stroke="#C4A052" strokeWidth="1.2" opacity="0.85" />
+          <circle cx="8.5" cy="8.5" r="1.4" stroke="#C4A052" strokeWidth="1.2" opacity="0.85" />
+          <path d="M21 14.5l-4.5-4.5L5 21" stroke="#C4A052" strokeWidth="1.2" opacity="0.85" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        <span className="font-body text-[9px] uppercase tracking-[0.24em] text-cream/70">
+          {t('photoHint')}
+        </span>
+      </div>
     </section>
   );
 }

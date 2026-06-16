@@ -55,10 +55,11 @@ export default function SectionHeading({
         </div>
       </Reveal>
 
-      {/* Заголовок: крупный serif; опциональное акцентное слово золотым курсивом */}
+      {/* Заголовок: крупный serif; опциональное акцентное слово золотым курсивом.
+          Премиум-масштаб — заголовки крупнее и «драматичнее». */}
       <Reveal delay={0.08}>
         <h2
-          className={`mt-5 font-heading text-3xl leading-[1.05] tracking-tight sm:text-4xl lg:text-5xl ${titleColor}`}
+          className={`mt-6 font-heading text-4xl leading-[1.03] tracking-tight sm:text-5xl lg:text-6xl ${titleColor}`}
         >
           {title}
           {accent && (
@@ -73,7 +74,7 @@ export default function SectionHeading({
       {subtitle && (
         <Reveal delay={0.16}>
           <p
-            className={`mt-4 font-body text-sm font-light leading-relaxed sm:text-base ${subColor}`}
+            className={`mt-5 font-body text-sm font-light leading-relaxed sm:text-base ${subColor}`}
           >
             {subtitle}
           </p>
