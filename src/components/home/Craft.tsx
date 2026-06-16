@@ -43,10 +43,10 @@ export default async function Craft() {
           {/* Фото-слоты (на мобильном — сверху) */}
           <div className="order-1 flex flex-col gap-4 md:order-2 lg:gap-6">
             <Reveal>
-              <PhotoSlot ratio="4 / 5" label={t('photoLabel')} hint="4:5 · 1600×2000" note={t('photo1')} />
+              <PhotoSlot ratio="4 / 5" src="/craft-master-2.jpg" alt={t('photo1')} />
             </Reveal>
             <Reveal delay={0.1}>
-              <PhotoSlot ratio="16 / 9" label={t('photoLabel')} hint="16:9 · 2000×1125" note={t('photo2')} />
+              <PhotoSlot ratio="16 / 9" src="/craft-detail-2.jpg" alt={t('photo2')} />
             </Reveal>
           </div>
         </div>

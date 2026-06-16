@@ -29,9 +29,9 @@ export default async function EditorialSplit() {
         <Reveal>
           <PhotoSlot
             ratio="16 / 9"
-            label={t('photo')}
-            hint="16:9 · 2400×1350"
-            note={t('shot1')}
+            src="/look-wide-2.jpg"
+            alt={t('shot1')}
+            sizes="100vw"
           />
         </Reveal>
 
@@ -40,17 +40,15 @@ export default async function EditorialSplit() {
           <Reveal>
             <PhotoSlot
               ratio="4 / 5"
-              label={t('photo')}
-              hint="4:5 · 1600×2000"
-              note={t('shot2')}
+              src="/look-model.jpg"
+              alt={t('shot2')}
             />
           </Reveal>
           <Reveal delay={0.1}>
             <PhotoSlot
               ratio="4 / 5"
-              label={t('photo')}
-              hint="4:5 · 1600×2000"
-              note={t('shot3')}
+              src="/look-detail.jpg"
+              alt={t('shot3')}
             />
           </Reveal>
         </div>

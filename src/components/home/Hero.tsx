@@ -1,6 +1,7 @@
 'use client';
 
 import {useRef} from 'react';
+import Image from 'next/image';
 import {motion, useScroll, useTransform, useReducedMotion} from 'framer-motion';
 import {useTranslations} from 'next-intl';
 import Container from '@/components/ui/Container';
@@ -100,15 +101,22 @@ export default function Hero() {
       className="relative overflow-hidden bg-dark text-cream"
       style={{minHeight: '100svh'}}
     >
-      {/* ─── Слой 1: тёмный градиентный фон с параллаксом ─── */}
+      {/* ─── Слой 1: фоновое фото на весь экран с параллаксом ─── */}
       <motion.div
         className="absolute -inset-x-0 -top-[15%] -bottom-[15%]"
-        style={{
-          y: bgY,
-          background:
-            'linear-gradient(170deg, #15120E 0%, #1e1710 40%, #221b12 60%, #15120E 100%)',
-        }}
-      />
+        style={{y: bgY}}
+      >
+        <Image
+          src="/hero.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        {/* Затемнение фото — для глубины и читаемости текста поверх него */}
+        <div aria-hidden="true" className="absolute inset-0 bg-dark/45" />
+      </motion.div>
 
       {/* ─── Слой 2: мягкое радиальное золотое сияние (за headline/gem) ─── */}
       <div
@@ -215,18 +223,6 @@ export default function Hero() {
 
         </motion.div>
       </Container>
-
-      {/* Бейдж-подсказка: сюда пойдёт фото на весь экран (временно, до загрузки реального фото) */}
-      <div className="pointer-events-none absolute bottom-7 left-7 z-10 flex items-center gap-2 rounded-full border border-dashed border-gold/40 bg-dark/40 px-4 py-2 backdrop-blur-sm">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <rect x="3" y="3" width="18" height="18" rx="1.5" stroke="#C4A052" strokeWidth="1.2" opacity="0.85" />
-          <circle cx="8.5" cy="8.5" r="1.4" stroke="#C4A052" strokeWidth="1.2" opacity="0.85" />
-          <path d="M21 14.5l-4.5-4.5L5 21" stroke="#C4A052" strokeWidth="1.2" opacity="0.85" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-        <span className="font-body text-[9px] uppercase tracking-[0.24em] text-cream/70">
-          {t('photoHint')}
-        </span>
-      </div>
     </section>
   );
 }

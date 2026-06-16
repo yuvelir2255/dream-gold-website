@@ -1,25 +1,48 @@
-// Слот-заглушка под БУДУЩЕЕ фото.
-// Не пустое место, а понятная рамка с подписью: что сюда пойдёт и какого формата.
-// Когда появится реальное фото — слот заменяется на <Image>.
-//
-// Пропсы:
-//  ratio — соотношение сторон в формате CSS aspect-ratio ('4 / 5', '16 / 9', '1 / 1').
-//  label — крупная подпись (по умолч. «Фото»).
-//  hint  — формат/размер, напр. «4:5 · 1600×2000».
-//  note  — что именно за кадр, напр. «На моделі · крупний план».
+import Image from 'next/image';
+
+// Слот под фото. Если задан `src` — показывает реальное фото (object-cover под нужные пропорции).
+// Если `src` нет — понятная заглушка с рамкой и подписью формата (для ещё не готовых фото).
+// Когда появляется фото — достаточно передать `src` (и `alt`), верстка не меняется.
 export default function PhotoSlot({
   ratio = '4 / 5',
   label = 'Фото',
   hint,
   note,
+  src,
+  alt = '',
+  sizes = '(max-width: 768px) 100vw, 50vw',
   className = '',
 }: {
   ratio?: string;
   label?: string;
   hint?: string;
   note?: string;
+  src?: string;
+  alt?: string;
+  /** Подсказка ширины для Next/Image. Для широких (во всю ширину) блоков передавать "100vw". */
+  sizes?: string;
   className?: string;
 }) {
+  // ── Реальное фото ──
+  if (src) {
+    return (
+      <div
+        style={{aspectRatio: ratio}}
+        className={`relative w-full overflow-hidden rounded-sm border border-line bg-champagne ${className}`}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          quality={90}
+          className="object-cover"
+        />
+      </div>
+    );
+  }
+
+  // ── Заглушка (фото ещё нет) ──
   return (
     <div
       style={{aspectRatio: ratio}}

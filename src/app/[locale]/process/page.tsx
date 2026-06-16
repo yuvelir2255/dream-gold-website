@@ -66,9 +66,9 @@ export default async function ProcessPage({
               <div className="mx-auto max-w-4xl">
                 <PhotoSlot
                   ratio="16 / 9"
-                  label={t('photoLabel')}
-                  hint="16:9 · 2400×1350"
-                  note={t('photoNote')}
+                  src="/process-2.jpg"
+                  alt={t('photoNote')}
+                  sizes="(max-width: 1024px) 100vw, 900px"
                 />
               </div>
             </Reveal>
