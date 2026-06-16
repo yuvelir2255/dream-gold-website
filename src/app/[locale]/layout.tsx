@@ -5,6 +5,7 @@ import {notFound} from 'next/navigation';
 import {EB_Garamond, Montserrat} from 'next/font/google';
 import {routing} from '@/i18n/routing';
 import SmoothScroll from '@/components/ui/SmoothScroll';
+import PageTransition from '@/components/ui/PageTransition';
 import {WishlistProvider} from '@/components/favorites/WishlistContext';
 import '../globals.css';
 
@@ -52,7 +53,9 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider>
           <WishlistProvider>
-            <SmoothScroll>{children}</SmoothScroll>
+            <SmoothScroll>
+              <PageTransition>{children}</PageTransition>
+            </SmoothScroll>
           </WishlistProvider>
         </NextIntlClientProvider>
       </body>

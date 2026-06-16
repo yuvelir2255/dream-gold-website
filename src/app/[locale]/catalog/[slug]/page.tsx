@@ -9,6 +9,7 @@ import Button from '@/components/ui/Button';
 import Reveal from '@/components/ui/Reveal';
 import Accordion from '@/components/catalog/Accordion';
 import ProductGallery from '@/components/catalog/ProductGallery';
+import StickyOrderCta from '@/components/catalog/StickyOrderCta';
 import {client} from '@/sanity/client';
 import {PRODUCT_BY_SLUG} from '@/lib/queries';
 import {pickLocale} from '@/lib/locale';
@@ -108,8 +109,9 @@ export default async function ProductPage({
                 />
               </Reveal>
 
-              {/* Права колонка: эйбров, назва, характеристики, акордеони, CTA */}
-              <div className="flex flex-col">
+              {/* Права колонка: эйбров, назва, характеристики, акордеони, CTA.
+                  На десктопе «прилипает» при прокрутке (sticky), пока листается галерея. */}
+              <div className="flex flex-col md:sticky md:top-28 md:self-start">
                 {/* Эйбров: золота лінія + категорія вразрядку */}
                 <Reveal>
                   <div className="flex items-center gap-3">
@@ -204,6 +206,8 @@ export default async function ProductPage({
           </Container>
         </Section>
       </main>
+      {/* Плавающая CTA внизу (мобильный): появляется при прокрутке, прячется у футера */}
+      <StickyOrderCta href={`/order?ref=${encodeURIComponent(title)}`} label={tProduct('cta')} />
       <Footer />
     </>
   );

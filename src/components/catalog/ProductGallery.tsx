@@ -24,15 +24,15 @@ export default function ProductGallery({images, alt, video}: ProductGalleryProps
 
   return (
     <div className="flex flex-col gap-5">
-      {/* Головне зображення — хайрлайн-рамка + м'яка тінь */}
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm border border-line bg-champagne shadow-[0_24px_60px_-32px_rgba(31,27,22,0.5)]">
+      {/* Головне зображення — хайрлайн-рамка + м'яка тінь + м'який зум по ховеру */}
+      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-sm border border-line bg-champagne shadow-[0_24px_60px_-32px_rgba(31,27,22,0.5)]">
         {mainUrl ? (
           <Image
             src={mainUrl}
             alt={alt || 'Dream Gold'}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover"
+            className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
             priority
           />
         ) : (

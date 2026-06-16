@@ -29,6 +29,9 @@ export function WishlistProvider({children}: {children: React.ReactNode}) {
       if (raw) {
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed)) {
+          // Разовое чтение сохранённого списка из localStorage при монтировании —
+          // намеренная синхронизация внешнего хранилища с React (не каскад рендеров).
+          // eslint-disable-next-line react-hooks/set-state-in-effect
           setIds(parsed.filter((x) => typeof x === 'string'));
         }
       }
